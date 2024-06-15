@@ -5,8 +5,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f; // default move speed
-    [SerializeField] private float slowedSpeed = 2.5f;
-    [SerializeField] private float fasterSpeed = 7.5f;
+    [SerializeField] private float slowedSpeed = 2.5f; // slowed move speed
+    [SerializeField] private float fasterSpeed = 7.5f; // quicker move speed
+    [SerializeField] private float rotationSpeed = 5f; // rotation speed
     [SerializeField] private float jumpForce = 5f; // default jump force
     [SerializeField] private float gravity = 9.81f; // gravity variable
 
@@ -14,11 +15,12 @@ public class PlayerController : MonoBehaviour
     private Vector3 moveDirection; // initializes moveability of character
     private bool isJumping; // keeps track of if player is jumping or not
     private bool secondJump; // keeps track of if the player has the ability to have a second jump.
-    private bool isCrouching;
-    private bool jumping;
-    private bool isSprinting;
-    private float horizontal;
-    private float vertical;
+    private bool isCrouching; // keeps track of if the player is crouching
+    private bool isSprinting; // keeps track of if the player is sprinting
+    private float horizontal; // makes it possible to change horizontal movement speed
+    private float vertical; // makes it possible to change vertical speed
+
+    public Vector2 Rotate;
 
     // Start is called before the first frame update
     void Start()
@@ -29,34 +31,46 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (Input.GetButtonDown("Crouch") && controller.isGrounded)
+        if (controller.isGrounded) // makes sure to get rid of second jump when on the ground
         {
-            if (isCrouching == true && jumping == false)
+            secondJump = false;
+        }
+
+
+        Rotate.x += Input.GetAxis("Mouse X") * rotationSpeed; // Allows the mouse to rotate player figure
+        transform.localRotation = Quaternion.Euler(0,-Rotate.x,0);
+
+        // make sure to set up the "Crouch" button in Edit -> Project Settings -> Input Manager
+        if (Input.GetButtonDown("Crouch") && controller.isGrounded) // puts player in and out of crouching postion when "Crouch" button is pressed
+        {
+            isSprinting = false; // prevents player from going back to sprinting without pressing the "Sprint" button
+
+            if (isCrouching == true) //puts player back to normal
             {
                 isCrouching = false;
-                jumping = true;
+                transform.localScale = new Vector3 (1,2,1);
             }
-            else
+            else // puts the player into a crouching position
             {
                 isCrouching = true;
-                jumping = false;
+                transform.localScale = new Vector3 (1,1,1);
             }
         }
-        else if (Input.GetButtonDown("Sprint"))
+        // make sure to set up the "Sprint" button in Edit -> Project Settings -> Input Manager
+        else if (Input.GetButtonDown("Sprint")) // puts the player in and out of crouching position
         {
-            isCrouching = false;
-            jumping = true;
-            if (isSprinting == true)
+            isCrouching = false; // makes it so you can go straight into a sprint from crouching
+
+            if (isSprinting == true) // returns the player back to norma speed
             {
                 isSprinting = false;
             }
-            else
+            else // puts the player into a sprinting movement
             {
                 isSprinting = true;
             }
         }
-        else if (Input.GetButtonDown("Jump") && controller.isGrounded && jumping == true) // Checks if Character is both grounded and the jump button is being pressed
+        else if (Input.GetButtonDown("Jump") && controller.isGrounded && isCrouching == false) // Checks if Character is both grounded and the jump button is being pressed
         {
             isJumping = true;
             secondJump = true; // allows the character to have a second jump
@@ -77,6 +91,7 @@ public class PlayerController : MonoBehaviour
         {
             horizontal = Input.GetAxis("Horizontal") * fasterSpeed;
             vertical = Input.GetAxis("Vertical") * fasterSpeed;
+            transform.localScale = new Vector3 (1,2,1); // returns player back to normal size when sprinting
         }
         else if (isCrouching == false && isSprinting == false) // Normal speed
         {
