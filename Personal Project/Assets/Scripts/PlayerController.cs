@@ -54,6 +54,32 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Platform"))
         {
             isOnGround = true;
+            Debug.Log("Player is on a platform." + isOnGround);
+        }
+
+        else if(collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("Player has Collided with enemy. Player takes damage!");
+        }
+
+        else if(collision.gameObject.CompareTag("Death"))
+        {
+            Debug.Log("Player has collided with Death. Player takes damage!");
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Healing"))
+        {
+            Destroy(other.gameObject);
+        }
+
+        if(other.gameObject.CompareTag("Powerup"))
+        {
+            Destroy(other.gameObject);
+        }
+    }
+
+    
 }
