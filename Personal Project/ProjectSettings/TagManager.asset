@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Healing
   - Powerup
+  - Food
   layers:
   - Default
   - TransparentFX

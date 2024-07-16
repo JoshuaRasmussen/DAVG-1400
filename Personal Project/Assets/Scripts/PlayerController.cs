@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Healing"))
+        if(other.gameObject.CompareTag("Food"))
         {
             Destroy(other.gameObject);
         }
