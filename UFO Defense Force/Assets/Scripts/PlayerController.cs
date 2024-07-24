@@ -9,6 +9,13 @@ public class PlayerController : MonoBehaviour
     public float xRange;
     public Transform blaster;
     public GameObject Projectile;
+    private Rigidbody playerRB;
+    private int Pickups = 0;
+
+    void Start()
+    {
+        playerRB = GetComponent<Rigidbody>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -41,8 +48,14 @@ public class PlayerController : MonoBehaviour
     }
     
     // deletes objects with trigger that hits the player
-    private void  OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        Destroy(other.gameObject);
+        if(other.gameObject.CompareTag("Pickup"))
+        {
+            Destroy(other.gameObject);
+            Pickups++;
+            Debug.Log("player has " + Pickups + " pickup(s) in inventory!");
+        }
+        
     }
 }
