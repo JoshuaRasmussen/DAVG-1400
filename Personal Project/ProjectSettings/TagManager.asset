@@ -7,9 +7,10 @@ TagManager:
   - Platform
   - Death
   - Enemy
-  - Healing
-  - Powerup
+  - Eat 1
+  - Eat 2
   - Food
+  - Powerup
   layers:
   - Default
   - TransparentFX
