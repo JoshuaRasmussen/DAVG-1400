@@ -12,39 +12,59 @@ public class SpawnManager : MonoBehaviour
     private float playerHelpSpawnTime = 4.0f;
     private float enemySpawnTime = 1.0f;
     private float startDelay = 1.0f;
+    public bool gameActivity;
 
-
-
-    // Start is called before the first frame update
+    // Starts Spawn Manager once difficulty has been selected
     public void StartSpawning(int difficulty)
     {
         enemySpawnTime /= difficulty;
-        InvokeRepeating("SpawnEnemy", startDelay, enemySpawnTime);
-        InvokeRepeating("SpawnPlayerHelp", startDelay, playerHelpSpawnTime);
+        ActivityOfGame(true);
+        StartCoroutine(SpawnEnemy());
+        StartCoroutine(SpawnCollectables());
     }
 
-    // Update is called once per frame
-
-    void SpawnEnemy ()
+    // Starts spawning enemies
+    IEnumerator SpawnEnemy()
     {
+        yield return new WaitForSeconds(startDelay);
 
-        float randomX = Random.Range(-xSpawnRange, xSpawnRange);
-        int randomIndex = Random.Range(0, enemies.Length);
+        // continues to spawn Collectables untill the player dies and game activity becomes false
+        while (gameActivity)
+        {
+            float randomX = Random.Range(-xSpawnRange, xSpawnRange);
+            int randomIndex = Random.Range(0, enemies.Length);
 
-        Vector3 spawnPos = new Vector3(randomX, ySpawn, zSpawnRange);
+            Vector3 spawnPos = new Vector3(randomX, ySpawn, zSpawnRange);
 
-        Instantiate(enemies[randomIndex], spawnPos, enemies[randomIndex].gameObject.transform.rotation);
+            Instantiate(enemies[randomIndex], spawnPos, enemies[randomIndex].gameObject.transform.rotation);
+            yield return new WaitForSeconds(enemySpawnTime);
+        }
         
             
     }
 
-    void SpawnPlayerHelp ()
+    // Starts spawning player Collectables
+    IEnumerator SpawnCollectables ()
     {
-        float randomX = Random.Range(-xSpawnRange, xSpawnRange);
-        int randomIndex = Random.Range(0, playerHelp.Length);
+        yield return new WaitForSeconds(startDelay);
 
-        Vector3 spawnPos = new Vector3(randomX, ySpawn, zSpawnRange);
+        // continues to spawn Collectables untill the player dies and game activity becomes false
+        while (gameActivity)
+        {
+            float randomX = Random.Range(-xSpawnRange, xSpawnRange);
+            int randomIndex = Random.Range(0, playerHelp.Length);
 
-        Instantiate(playerHelp[randomIndex], spawnPos, playerHelp[randomIndex].gameObject.transform.rotation);
+            Vector3 spawnPos = new Vector3(randomX, ySpawn, zSpawnRange);
+
+            Instantiate(playerHelp[randomIndex], spawnPos, playerHelp[randomIndex].gameObject.transform.rotation);
+            yield return new WaitForSeconds(playerHelpSpawnTime);
+        }
+        
+    }
+
+    // changes whether the spawn manager should stop or start spawning enemies and collectables
+    public void ActivityOfGame(bool Activity)
+    {
+        gameActivity = Activity;
     }
 }

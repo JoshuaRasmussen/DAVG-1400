@@ -11,17 +11,10 @@ public class MoveDown : MonoBehaviour
     private PlayerController playerController;
 
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
-
+        // Continues to move the object down during gameplay
         transform.Translate(Vector3.forward * -speedOfObj * Time.deltaTime);
     
     }

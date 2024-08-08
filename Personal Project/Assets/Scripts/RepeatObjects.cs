@@ -16,6 +16,7 @@ public class RepeatBackground : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // repeats scenery
         if (transform.position.z < (startPos.z - (repeatWidth.z / 2)))
         {
             transform.position = startPos;

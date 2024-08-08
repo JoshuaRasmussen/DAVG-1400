@@ -19,10 +19,12 @@ public class DifficultyButton : MonoBehaviour
         button.onClick.AddListener(SetDifficulty);
     }
 
-    // Update is called once per frame
+    // Sets the difficulty up for the game
     void SetDifficulty()
     {
         Debug.Log(gameObject.name + " was clicked");
+
+        // Activate PlayerController and SpawnManager Scripts for Spawn Manager and player objects
         playerController.StartPlayer();
         spawnManager.StartSpawning(difficulty);
     }
