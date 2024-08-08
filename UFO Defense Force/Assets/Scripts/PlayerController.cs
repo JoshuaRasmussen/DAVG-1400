@@ -11,10 +11,12 @@ public class PlayerController : MonoBehaviour
     public GameObject Projectile;
     private Rigidbody playerRB;
     private int Pickups = 0;
+    public GameManager gameManager;
 
     void Start()
     {
         playerRB = GetComponent<Rigidbody>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -38,7 +40,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // if spacebar is pressed, sends out projectile
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && gameManager.isGameOver == false)
         {
             // Create Projectile at the blaster transform position maintaining the objects rotation.
             Instantiate(Projectile, blaster.transform.position, Projectile.transform.rotation);

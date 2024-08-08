@@ -122,6 +122,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   topBounds: 30
   lowerBounds: -13
+  gameManager: {fileID: 0}
+  isUFO: 1
 --- !u!114 &1548451874223095114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,7 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae1285c2cb189f4479258970a1423dd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -10
+  speed: -5
 --- !u!54 &4682170212872798411
 Rigidbody:
   m_ObjectHideFlags: 0

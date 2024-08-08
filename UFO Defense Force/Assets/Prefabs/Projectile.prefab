@@ -139,6 +139,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   topBounds: 30
   lowerBounds: -40
+  gameManager: {fileID: 0}
+  isUFO: 0
 --- !u!114 &-3825087312158902552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,6 +155,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   topBounds: 30
   lowerBounds: -13
+  gameManager: {fileID: 0}
+  isUFO: 0
 --- !u!54 &-6800142591832733665
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -192,3 +196,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4197b832dd59fb44b941aa055f00762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreManager: {fileID: 0}
+  scoreToGive: 50
