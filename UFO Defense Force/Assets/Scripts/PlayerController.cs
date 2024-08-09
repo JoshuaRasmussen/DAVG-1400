@@ -12,10 +12,13 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRB;
     private int Pickups = 0;
     public GameManager gameManager;
+    public AudioClip shootingProjectile;
+    private AudioSource playerAudio;
 
     void Start()
     {
         playerRB = GetComponent<Rigidbody>();
+        playerAudio = GetComponent<AudioSource>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
@@ -43,6 +46,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && gameManager.isGameOver == false)
         {
             // Create Projectile at the blaster transform position maintaining the objects rotation.
+            playerAudio.PlayOneShot(shootingProjectile, 1.0f);
             Instantiate(Projectile, blaster.transform.position, Projectile.transform.rotation);
         }
 

@@ -26,12 +26,13 @@ public class DestroyOutOfBounds : MonoBehaviour
         }
         else if (transform.position.z < lowerBounds)
         {
-            Destroy(gameObject);
+            
             if (isUFO)
             {
                 gameManager.isGameOver = true;
                 Debug.Log("Game Over!");
             }
+            Destroy(gameObject);
             
         }
     }
